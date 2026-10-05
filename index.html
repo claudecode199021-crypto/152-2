@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Lens | NTRO — AI-Driven Social Media Analytics</title>
+  <meta name="description" content="Social Lens by National Technical Research Organisation (NTRO) — AI-driven social media analytics framework delivering sentiment, demographics, trends, and network analysis on one dashboard.">
+  <link rel="stylesheet" href="css/ux4g.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Skip to main content link — WCAG 2.1 AA -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Classification banner -->
+  <div class="classification-banner" role="banner" aria-label="Classification">
+    FOR INTERNAL USE ONLY — OFFICIAL
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <h1 data-i18n="app.title">Social Lens</h1>
+        <p data-i18n="app.subtitle">National Technical Research Organisation (NTRO)</p>
+      </div>
+      <div class="header-actions">
+        <div class="live-indicator">
+          <span class="live-dot"></span>
+          <span data-i18n="live.connected">Live Connected</span>
+          <span class="live-badge" id="live-badge">+0 new posts</span>
+        </div>
+        <button class="btn btn-header" id="lang-toggle" aria-label="Toggle language">हिन्दी</button>
+        
+        <!-- Dark / Light Mode Toggle -->
+        <button class="btn btn-header" id="theme-toggle" aria-label="Toggle dark and light theme" title="Toggle theme">
+          <span id="theme-toggle-icon">🌙</span>
+          <span id="theme-toggle-text" style="font-size: 0.8rem;">Dark</span>
+        </button>
+
+        <button class="btn btn-header" id="contrast-toggle" aria-label="Toggle high contrast" title="Toggle high contrast">
+          <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+          </svg>
+        </button>
+        
+        <!-- Authenticated User Profile Badge -->
+        <div class="user-avatar" id="user-profile-badge">
+          <div class="avatar-circle" id="user-avatar-initial">A</div>
+          <div style="display: flex; flex-direction: column; line-height: 1.1;">
+            <span id="user-display-name" style="font-size: 0.8rem; font-weight: 600;">ADMIN</span>
+            <span id="user-display-role" style="font-size: 0.65rem; color: #ff9933; font-weight: 700; text-transform: uppercase;">ADMIN</span>
+          </div>
+          <button id="logout-btn" onclick="handleLogout(event)" class="btn btn-header" style="padding: 0.2rem 0.5rem; font-size: 0.75rem; margin-left: 0.35rem;" title="Sign Out">Logout 🚪</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <main id="main-content" class="main-content">
+    <!-- Filter bar -->
+    <div class="filter-bar">
+      <div class="filter-group">
+        <label for="platform-filter" class="filter-label" data-i18n="filter.platform">Platform:</label>
+        <select id="platform-filter" class="filter-select" aria-label="Platform filter">
+          <option value="all" data-i18n="filter.all">All Platforms</option>
+          <option value="twitter">X (Twitter)</option>
+          <option value="telegram">Telegram</option>
+          <option value="instagram">Instagram</option>
+          <option value="facebook">Facebook</option>
+          <option value="reddit">Reddit</option>
+          <option value="youtube">YouTube</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="date-from" class="filter-label" data-i18n="filter.dateRange">Date Range:</label>
+        <input type="date" id="date-from" class="filter-input" value="2024-03-15" aria-label="Start date">
+        <span style="color: #94a3b8;">→</span>
+        <input type="date" id="date-to" class="filter-input" value="2024-03-16" aria-label="End date">
+      </div>
+
+      <div class="filter-actions">
+        <button class="btn btn-primary" id="export-csv">Export CSV</button>
+        <button class="btn btn-secondary" id="export-pdf">Export PDF</button>
+      </div>
+    </div>
+
+    <!-- Quick Navigation Jump Links -->
+    <div class="quick-nav" aria-label="Quick jump navigation">
+      <a href="#kpi-section" class="quick-nav-link">📊 Overview</a>
+      <a href="#sentiment-section" class="quick-nav-link">📈 Sentiment Analysis</a>
+      <a href="#trending-section" class="quick-nav-link">🔥 Trending Topics</a>
+      <a href="#demographics-section" class="quick-nav-link">👥 Audience Demographics</a>
+      <a href="#influencers-section" class="quick-nav-link">⭐ Top Influencers</a>
+      <a href="#network-section" class="quick-nav-link">🌐 Network Graph</a>
+      <a href="#timeline-section" class="quick-nav-link">⏱️ Topic Timeline</a>
+    </div>
+
+    <!-- KPI Cards -->
+    <section id="kpi-section" aria-label="Key Performance Indicators">
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-inner">
+            <div>
+              <div class="kpi-label" data-i18n="kpi.totalPosts">Total Posts</div>
+              <div class="kpi-value" id="kpi-posts">1,24,560</div>
+              <div class="kpi-trend">▲ +12.4% <span style="font-weight: 400; color: var(--text-muted);">vs yesterday</span></div>
+            </div>
+            <div class="kpi-icon kpi-icon-navy">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-inner">
+            <div>
+              <div class="kpi-label" data-i18n="kpi.activeUsers">Active Users</div>
+              <div class="kpi-value" id="kpi-users">38,420</div>
+              <div class="kpi-trend">▲ +8.1% <span style="font-weight: 400; color: var(--text-muted);">vs yesterday</span></div>
+            </div>
+            <div class="kpi-icon kpi-icon-green">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-inner">
+            <div>
+              <div class="kpi-label" data-i18n="kpi.trendingTopics">Trending Topics</div>
+              <div class="kpi-value" id="kpi-topics">17</div>
+              <div class="kpi-trend">▲ 3 Viral <span style="font-weight: 400; color: var(--text-muted);">burst spikes</span></div>
+            </div>
+            <div class="kpi-icon kpi-icon-saffron">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-inner">
+            <div>
+              <div class="kpi-label" data-i18n="kpi.sentimentSplit">Sentiment Split</div>
+              <div class="kpi-value" id="kpi-sentiment">58%</div>
+              <div class="kpi-sub" id="kpi-sentiment-sub">Positive 58% · Negative 27% · Neutral 15%</div>
+            </div>
+            <div class="kpi-icon kpi-icon-blue">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sentiment + Trending Topics Section -->
+    <section id="sentiment-section" aria-label="Sentiment and Trends" class="section-row">
+      <div class="card">
+        <div class="card-header-box">
+          <h3 class="card-title">
+            <span data-i18n="section.sentiment">Sentiment Over Time</span>
+            <span class="tip-badge">💡 Click pills to toggle emotions</span>
+          </h3>
+          <p class="card-subtitle">Track polarity shifts, sarcasm, and multi-emotion intensity over 24 hours</p>
+        </div>
+        <div id="sentiment-chart-container"></div>
+      </div>
+
+      <div class="card" id="trending-section">
+        <div class="card-header-box">
+          <h3 class="card-title">
+            <span data-i18n="section.trending">Trending Topics</span>
+            <span class="tip-badge">🔥 Top Viral</span>
+          </h3>
+          <p class="card-subtitle">Real-time BERTopic clusters ranked by % volume growth</p>
+        </div>
+        <div id="trending-topics-container"></div>
+      </div>
+    </section>
+
+    <!-- Audience Demographics Section -->
+    <section id="demographics-section" aria-label="Audience Demographics" class="section-full">
+      <div class="card">
+        <div class="card-header-box">
+          <h3 class="card-title">
+            <span data-i18n="section.audience">Audience Demographics</span>
+            <span class="tip-badge">🔒 Aggregated & Anonymized</span>
+          </h3>
+          <p class="card-subtitle">Anonymized user age, geographic origin, Indic language split, and professional interest distribution</p>
+        </div>
+        <div class="demo-grid">
+          <div class="demo-section">
+            <h4 data-i18n="label.age">Age Distribution</h4>
+            <div id="demo-age"></div>
+          </div>
+          <div class="demo-section">
+            <h4 data-i18n="label.location">Top Locations</h4>
+            <div id="demo-location"></div>
+          </div>
+          <div class="demo-section">
+            <h4 data-i18n="label.language">Languages</h4>
+            <div id="demo-language"></div>
+          </div>
+          <div class="demo-section">
+            <h4 data-i18n="label.interests">Professional Interests</h4>
+            <div id="demo-interest"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Top Influencers Section -->
+    <section id="influencers-section" aria-label="Top Influencers" class="section-full">
+      <div class="card">
+        <div class="card-header-box">
+          <h3 class="card-title">
+            <span data-i18n="section.influencers">Top Influencers</span>
+            <span class="tip-badge">⭐ PageRank & Reach Scoring</span>
+          </h3>
+          <p class="card-subtitle">Key accounts amplifying discussions, scored by network PageRank (0–100) and cross-platform reach</p>
+        </div>
+        <div class="influencer-table-container">
+          <table class="influencer-table" role="table" aria-label="Top Influencers Table">
+            <thead>
+              <tr>
+                <th data-i18n="label.rank">Rank</th>
+                <th>Handle</th>
+                <th data-i18n="label.score">Score</th>
+                <th class="hide-mobile" data-i18n="label.platform">Platform</th>
+                <th class="hide-mobile" data-i18n="label.reach">Reach</th>
+                <th class="hide-mobile" data-i18n="label.engagement">Engagement</th>
+                <th>Trend</th>
+              </tr>
+            </thead>
+            <tbody id="influencers-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Network Analysis Section -->
+    <section id="network-section" aria-label="Network Analysis" class="section-full">
+      <div class="card">
+        <div class="card-header-box">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+            <div>
+              <h3 class="card-title" style="margin-bottom: 0;" data-i18n="section.network">Network Analysis</h3>
+              <p class="card-subtitle">Interactive interaction graph displayingLouvain communities and hourly cascade flow</p>
+            </div>
+            <div class="community-legend">
+              <div class="community-item"><span class="community-dot" style="background-color: #ff9933;"></span>Influencers</div>
+              <div class="community-item"><span class="community-dot" style="background-color: #1a237e;"></span>Community A</div>
+              <div class="community-item"><span class="community-dot" style="background-color: #138808;"></span>Community B</div>
+              <div class="community-item"><span class="community-dot" style="background-color: #7c3aed;"></span>Community C</div>
+            </div>
+          </div>
+        </div>
+        <div id="network-graph-container"></div>
+      </div>
+    </section>
+
+    <!-- Topic Timeline Section -->
+    <section id="timeline-section" aria-label="Topic Timeline" class="section-full">
+      <div class="card">
+        <div class="card-header-box">
+          <h3 class="card-title">
+            <span data-i18n="section.timeline">Topic Timeline</span>
+            <span class="tip-badge">💡 Click event card to inspect posts</span>
+          </h3>
+          <p class="card-subtitle">Chronological event flow tracking a topic from origin post to viral cross-platform spread</p>
+        </div>
+        <div id="timeline-container"></div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>Social Lens v1.0 — National Technical Research Organisation (NTRO)</p>
+      <p>AI-Driven Social Media Analytics Framework · Data shown is from mock/replay adapter</p>
+      <p>Designed following UX4G (Government of India) design system guidelines</p>
+    </footer>
+  </main>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
